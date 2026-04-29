@@ -30,8 +30,7 @@ class Database {
                 self::$instance = new PDO($dsn, self::USERNAME, self::PASSWORD);
                 
                 // Set error mode to Exceptions for better error handling
-                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ATTR_ERRMODE_EXCEPTION);
-                
+                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);                
                 // Set default fetch mode to Associative Array for easier JSON conversion
                 self::$instance->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
                 
