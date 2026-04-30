@@ -7,11 +7,16 @@ class Member {
     private $db;
     private $table = "members";
 
+    /**
+     * Initialize connection using the Database Singleton
+     */
     public function __construct() {
-        // Initialize the database connection
         $this->db = Database::getConnection();
     }
 
+    /**
+     * Fetch all records from the members table
+     */
     public function getAll() {
         $query = "SELECT * FROM " . $this->table;
         $stmt = $this->db->prepare($query);
@@ -19,7 +24,9 @@ class Member {
         return $stmt->fetchAll();
     }
 
-
+    /**
+     * Retrieve a single member by their unique ID
+     */
     public function getById($id) {
         $query = "SELECT * FROM " . $this->table . " WHERE id = ?";
         $stmt = $this->db->prepare($query);
@@ -27,21 +34,27 @@ class Member {
         return $stmt->fetch();
     }
 
+    /**
+     * Insert a new member into the database
+     */
     public function createMember($data) {
-        $query = "INSERT INTO " . $this->table . " (full_name, email, phone, membership_status
+        // SQL query with named placeholders for security
+        $query = "INSERT INTO " . $this->table . " (full_name, email, phone, membership_status)
                   VALUES (:full_name, :email, :phone, :membership_status)";
 
         $stmt = $this->db->prepare($query);
 
         return $stmt->execute([
-            'full_name'            => $data['full_name'],
-            'email'           => $data['email'],
+            'full_name'         => $data['full_name'],
+            'email'             => $data['email'],
             'phone'             => $data['phone'],
-            'membership_status'   => $data['membership_status']
+            'membership_status' => $data['membership_status']
         ]);
     }
 
-   
+    /**
+     * Permanently remove a member record by ID
+     */
     public function deleteById($id) {
         $query = "DELETE FROM " . $this->table . " WHERE id = ?";
         $stmt = $this->db->prepare($query);
@@ -49,9 +62,9 @@ class Member {
     }
 
     /**
-     * Update a book by its ID
+     * Update existing member information
      */
-   public function updateMember($id, $data) {
+    public function updateMember($id, $data) {
         $query = "UPDATE " . $this->table . " 
                 SET full_name = :full_name, 
                     email = :email, 
@@ -62,11 +75,11 @@ class Member {
         $stmt = $this->db->prepare($query);
         
         return $stmt->execute([
-            'full_name'            => $data['full_name'],
-            'email'           => $data['email'],
-            'phone'            => $data['phone'],
+            'full_name'         => $data['full_name'],
+            'email'             => $data['email'],
+            'phone'             => $data['phone'],
             'membership_status' => $data['membership_status'],
-            'id'               => $id
+            'id'                => $id
         ]);
     }   
 }
