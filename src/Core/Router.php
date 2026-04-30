@@ -13,13 +13,17 @@ class Router {
     }
 
     public function dispatch($requestedUri, $requestedMethod) {
-        // 1. Clean the URI from query strings and trailing slashes
+
         $urlPath = parse_url($requestedUri, PHP_URL_PATH);
-        $urlPath = trim($urlPath, '/');
+
         
-        $scriptName = dirname($_SERVER['SCRIPT_NAME']);
-        $urlPath = str_replace($scriptName, '', $urlPath);
+        $scriptPath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+        if ($scriptPath !== '/') {
+            $urlPath = str_replace($scriptPath, '', $urlPath);
+        }
+
         $urlPath = trim($urlPath, '/');
+
         // 2. Break the requested URL into segments (e.g., ['books', '123'])
         $urlParts = $urlPath === '' ? [] : explode('/', $urlPath);
 
