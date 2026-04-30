@@ -17,13 +17,15 @@ class Router {
         $urlPath = parse_url($requestedUri, PHP_URL_PATH);
         $urlPath = trim($urlPath, '/');
         
+        $scriptName = dirname($_SERVER['SCRIPT_NAME']);
+        $urlPath = str_replace($scriptName, '', $urlPath);
+        $urlPath = trim($urlPath, '/');
         // 2. Break the requested URL into segments (e.g., ['books', '123'])
-        $urlParts = explode('/', $urlPath);
+        $urlParts = $urlPath === '' ? [] : explode('/', $urlPath);
 
         foreach ($this->routes as $route) {
             // Break the registered route path into segments (e.g., ['books', '{id}'])
-            $routeParts = explode('/', $route['path']);
-
+            $routeParts = $route['path'] === '' ? [] : explode('/', $route['path']);
             // Check if segments count and HTTP method match
             if (count($urlParts) === count($routeParts) && $route['method'] === $requestedMethod) {
                 
