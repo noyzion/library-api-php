@@ -38,19 +38,19 @@ class Member {
      * Insert a new member into the database
      */
     public function createMember($data) {
-        // SQL query with named placeholders for security
-        $query = "INSERT INTO " . $this->table . " (full_name, email, phone, membership_status)
-                  VALUES (:full_name, :email, :phone, :membership_status)";
+    // SQL query with named placeholders for security
+    $query = "INSERT INTO " . $this->table . " (full_name, email, phone, membership_status)
+              VALUES (:full_name, :email, :phone, :membership_status)";
 
-        $stmt = $this->db->prepare($query);
+    $stmt = $this->db->prepare($query);
 
-        return $stmt->execute([
-            'full_name'         => $data['full_name'],
-            'email'             => $data['email'],
-            'phone'             => $data['phone'],
-            'membership_status' => $data['membership_status']
-        ]);
-    }
+    return $stmt->execute([
+        'full_name'         => $data['full_name'],
+        'email'             => $data['email'],
+        'phone'             => $data['phone'],
+        'membership_status' => $data['membership_status'] ?? 'active'
+    ]);
+}
 
     /**
      * Permanently remove a member record by ID
