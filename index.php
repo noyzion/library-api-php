@@ -11,20 +11,20 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // 2. Load Core classes
-require_once __DIR__ . '/../src/Core/Response.php';
-require_once __DIR__ . '/../src/Core/Request.php';
-require_once __DIR__ . '/../src/Core/Router.php';
+require_once __DIR__ . '/src/Core/Response.php';
+require_once __DIR__ . '/src/Core/Request.php';
+require_once __DIR__ . '/src/Core/Router.php';
 
 // 3. Load Database configuration and Models
-require_once __DIR__ . '/../config/Database.php';
-require_once __DIR__ . '/../src/Models/Book.php';
-require_once __DIR__ . '/../src/Models/Member.php';
-require_once __DIR__ . '/../src/Models/Loan.php';
+require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/src/Models/Book.php';
+require_once __DIR__ . '/src/Models/Member.php';
+require_once __DIR__ . '/src/Models/Loan.php';
 
 // 4. Load Controllers
-require_once __DIR__ . '/../src/Controllers/BookController.php';
-require_once __DIR__ . '/../src/Controllers/MemberController.php';
-require_once __DIR__ . '/../src/Controllers/LoanController.php';
+require_once __DIR__ . '/src/Controllers/BookController.php';
+require_once __DIR__ . '/src/Controllers/MemberController.php';
+require_once __DIR__ . '/src/Controllers/LoanController.php';
 
 // 5. Initialize the Router
 $router = new Router();
