@@ -41,8 +41,11 @@ class Loan {
         ]);
 
         $updateBook = "UPDATE books SET available_copies = available_copies - 1 WHERE id = :book_id";
-            $updateStmt = $this->db->prepare($updateBook);
-            $updateStmt->execute(['book_id' => $book_id]);
+        $updateStmt = $this->db->prepare($updateBook);
+        $updateStmt->execute(['book_id' => $book_id]);
+        
+        $this->db->commit();
+
         return $this->db->lastInsertId();
         } catch (Exception $e) {
             $this->db->rollBack();
