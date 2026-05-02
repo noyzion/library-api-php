@@ -27,32 +27,41 @@ class LoanController {
     public function store()
     {
         $data = Request::getBody();
+
         if (!isset($data['book_id']) || !isset($data['member_id'])) {
-            Response::error("Book ID and Member ID are required", 400);
-        }
-        // 2. Business Logic: Check if member is active
-        $member = $this->memberModel->getById($data['member_id']);
-        if (!$member || $member['membership_status'] !== 'active') {
-            Response::error("Only active members can borrow books", 403);
-        }
-        // 3. Business Logic: Check book availability
-        $book = $this->bookModel->getById($data['book_id']);
-        if (!$book || $book['available_copies'] <= 0) {
-            Response::error("Book is not available for loan", 400);
+            return Response::error("Book ID and Member ID are required", 400);
         }
 
-        // 4. Business Logic: Check if already borrowed by same member[cite: 1]
-        if ($this->loanModel->isAlreadyBorrowed($data['member_id'], $data['book_id'])) {
-            Response::error("This member already has an active loan for this book", 400);
+        if (!is_numeric($data['book_id']) || !is_numeric($data['member_id'])) {
+            return Response::error("Book ID and Member ID must be valid numbers", 400);
         }
-        // 5. Create Loan (The model will handle due_date and copies update)[cite: 1]
-        $loanId = $this->loanModel->borrowBook($data['book_id'], $data['member_id']);
+
+        $bookId = (int)$data['book_id'];
+        $memberId = (int)$data['member_id'];
+
+        $member = $this->memberModel->getById($memberId);
+
+        if (!$member || $member['membership_status'] !== 'active') {
+            return Response::error("Only active members can borrow books", 403);
+        }
+
+        $book = $this->bookModel->getById($bookId);
+
+        if (!$book) {
+            return Response::error("Book not found", 404);
+        }
+
+        if ($this->loanModel->isAlreadyBorrowed($memberId, $bookId)) {
+            return Response::error("This member already has an active loan for this book", 400);
+        }
+
+        $loanId = $this->loanModel->borrowBook($bookId, $memberId);
 
         if ($loanId) {
-            Response::success(['id' => $loanId], "Book borrowed successfully", 201);
-        } else {
-            Response::error("Failed to process loan", 500);
+            return Response::success(['id' => $loanId], "Book borrowed successfully", 201);
         }
+
+        return Response::error("Book is not available for loan", 400);
     }
 
     /**

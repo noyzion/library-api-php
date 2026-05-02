@@ -26,6 +26,9 @@ class MemberController
      */
     public function show($id)
     {
+        if (!is_numeric($id)) {
+            Response::error("Invalid member ID", 400);
+        }
         $member = $this->memberModel->getById($id);
 
         if ($member) {
@@ -43,13 +46,33 @@ class MemberController
     {
         $data = Request::getBody();
 
-        if (!isset($data['full_name']) || !isset($data['email'])) {
-            Response::error("Full Name and Email are required", 400); 
+       $requiredFields = ['full_name', 'email', 'phone'];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field]) || empty(trim($data[$field]))) {
+                Response::error("$field is required", 400);
+            }
+        }
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            Response::error("Invalid email format", 400);
+        }
+        $allowedStatuses = ['active', 'suspended', 'expired'];
+
+        if (isset($data['membership_status']) && !in_array($data['membership_status'], $allowedStatuses)) {
+            Response::error("Invalid membership status", 400);
         }
 
-        $newMemberId = $this->memberModel->createMember($data);
+        try {
+            $newMemberId = $this->memberModel->createMember($data);
+            Response::success(['id' => $newMemberId], "Member created successfully", 201);
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                Response::error("Email already exists", 409);
+            }
 
-        Response::success(['id' => $newMemberId], "Member created successfully", 201);
+            Response::error("Database error", 500);
+        }
+
     }
 
     /**
@@ -58,14 +81,44 @@ class MemberController
      */
     public function update($id)
     {
+        if (!is_numeric($id)) {
+            Response::error("Invalid member ID", 400);
+        }
+
+        $existingMember = $this->memberModel->getById($id);
+
+        if (!$existingMember) {
+            Response::error("Member not found", 404);
+        }
+
         $data = Request::getBody();
 
-        $success = $this->memberModel->updateMember($id, $data);
+        $requiredFields = ['full_name', 'email', 'phone', 'membership_status'];
 
-        if ($success) {
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field]) || empty(trim($data[$field]))) {
+                Response::error("$field is required", 400);
+            }
+        }
+
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            Response::error("Invalid email format", 400);
+        }
+
+        $allowedStatuses = ['active', 'suspended', 'expired'];
+
+        if (!in_array($data['membership_status'], $allowedStatuses)) {
+            Response::error("Invalid membership status", 400);
+        }
+        try {
+            $this->memberModel->updateMember($id, $data);
             Response::success(null, "Member updated successfully");
-        } else {
-            Response::error("Failed to update member or no changes made", 400);
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                Response::error("Email already exists", 409);
+            }
+
+            Response::error("Database error", 500);
         }
     }
 
@@ -75,6 +128,9 @@ class MemberController
      */
     public function destroy($id)
     {
+        if (!is_numeric($id)) {
+            Response::error("Invalid member ID", 400);
+        }
         $success = $this->memberModel->deleteById($id);
 
         if ($success) {

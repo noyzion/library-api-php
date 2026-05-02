@@ -49,7 +49,7 @@ class Book {
 
         $stmt = $this->db->prepare($query);
 
-        return $stmt->execute([
+         $stmt->execute([
             'title'            => $data['title'],
             'author'           => $data['author'],
             'isbn'             => $data['isbn'],
@@ -58,6 +58,8 @@ class Book {
             'total_copies'     => $data['total_copies'] ?? 1, 
             'available_copies' => $data['total_copies'] ?? 1 
         ]);
+
+        return $this->db->lastInsertId();
     }
 
     /**
@@ -66,7 +68,8 @@ class Book {
     public function deleteById($id) {
         $query = "DELETE FROM " . $this->table . " WHERE id = ?";
         $stmt = $this->db->prepare($query);
-        return $stmt->execute([$id]);
+         $stmt->execute([$id]);
+        return $stmt->rowCount() > 0;
     }
 
     /**
@@ -82,12 +85,14 @@ class Book {
 
         $stmt = $this->db->prepare($query);
         
-        return $stmt->execute([
+        $stmt->execute([
             'title'            => $data['title'],
             'author'           => $data['author'],
             'genre'            => $data['genre'],
             'available_copies' => $data['available_copies'],
             'id'               => $id
         ]);
+       return $stmt->rowCount() > 0;
+
     }   
 }

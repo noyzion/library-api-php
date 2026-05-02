@@ -1,7 +1,7 @@
 <?php
 
 // Include the Database Singleton class
-require_once __DIR__ . '/../../config/Database.php';
+require_once __DIR__ . '/../../config/database.php';
 
 class Loan {
     private $db;
@@ -27,62 +27,117 @@ class Loan {
 
     /**
     * Create a new loan record and decrement available copies 
-    */
-    public function borrowBook($book_id, $member_id) {
+        */
+    public function borrowBook($book_id, $member_id)
+    {
         try {
             $this->db->beginTransaction();
-        $query = "INSERT INTO " . $this->table . " (book_id, member_id, loan_date, due_date) 
-                  VALUES (:book_id, :member_id, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 14 DAY))";
-        
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([
-            'book_id'   => $book_id,
-            'member_id' => $member_id
-        ]);
 
-        $updateBook = "UPDATE books SET available_copies = available_copies - 1 WHERE id = :book_id";
-        $updateStmt = $this->db->prepare($updateBook);
-        $updateStmt->execute(['book_id' => $book_id]);
-        
-        $this->db->commit();
+            $updateBook = "
+                UPDATE books
+                SET available_copies = available_copies - 1
+                WHERE id = :book_id
+                AND available_copies > 0
+            ";
 
-        return $this->db->lastInsertId();
+            $updateStmt = $this->db->prepare($updateBook);
+            $updateStmt->execute([
+                'book_id' => $book_id
+            ]);
+
+            if ($updateStmt->rowCount() === 0) {
+                $this->db->rollBack();
+                return false;
+            }
+
+            $query = "
+                INSERT INTO " . $this->table . " 
+                (book_id, member_id, loan_date, due_date, status)
+                VALUES 
+                (:book_id, :member_id, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 14 DAY), 'active')
+            ";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([
+                'book_id' => $book_id,
+                'member_id' => $member_id
+            ]);
+
+            $loanId = $this->db->lastInsertId();
+
+            $this->db->commit();
+
+            return $loanId;
+
         } catch (Exception $e) {
-            $this->db->rollBack();
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
             return false;
         }
     }
-
     /**
-     * Mark a book as returned and increment available copies[cite: 1]
+     * Mark a book as returned and increment available copies
      */
-    public function returnBook($loan_id) {
-      try {
-            $loanQuery = "SELECT book_id FROM " . $this->table . " WHERE id = :id AND status = 'active'";
-            $loanStmt = $this->db->prepare($loanQuery);
-            $loanStmt->execute(['id' => $loan_id]);
-            $loan = $loanStmt->fetch();
-
-            if (!$loan) return false;
-
+    public function returnBook($loan_id)
+    {
+        try {
             $this->db->beginTransaction();
 
-            $query = "UPDATE " . $this->table . " 
-                      SET return_date = CURDATE(), 
-                          status = 'returned' 
-                      WHERE id = :id";
-            
-            $stmt = $this->db->prepare($query);
-            $stmt->execute(['id' => $loan_id]);
+            $loanQuery = "
+                SELECT book_id 
+                FROM " . $this->table . "
+                WHERE id = :id
+                AND status = 'active'
+                LIMIT 1
+            ";
 
-            $updateBook = "UPDATE books SET available_copies = available_copies + 1 WHERE id = :book_id";
+            $loanStmt = $this->db->prepare($loanQuery);
+            $loanStmt->execute([
+                'id' => $loan_id
+            ]);
+
+            $loan = $loanStmt->fetch();
+
+            if (!$loan) {
+                $this->db->rollBack();
+                return false;
+            }
+
+            $query = "
+                UPDATE " . $this->table . "
+                SET return_date = CURDATE(),
+                    status = 'returned'
+                WHERE id = :id
+                AND status = 'active'
+            ";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([
+                'id' => $loan_id
+            ]);
+
+            $updateBook = "
+                UPDATE books
+                SET available_copies = available_copies + 1
+                WHERE id = :book_id
+            ";
+
             $updateStmt = $this->db->prepare($updateBook);
-            $updateStmt->execute(['book_id' => $loan['book_id']]);
+            $updateStmt->execute([
+                'book_id' => $loan['book_id']
+            ]);
 
             $this->db->commit();
+
             return true;
+
         } catch (Exception $e) {
-            $this->db->rollBack();
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
             return false;
         }
     }

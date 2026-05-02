@@ -44,12 +44,14 @@ class Member {
 
     $stmt = $this->db->prepare($query);
 
-    return $stmt->execute([
+    $stmt->execute([
         'full_name'         => $data['full_name'],
         'email'             => $data['email'],
         'phone'             => $data['phone'],
         'membership_status' => $data['membership_status'] ?? 'active'
     ]);
+    return $this->db->lastInsertId();
+
 }
 
     /**
@@ -58,7 +60,9 @@ class Member {
     public function deleteById($id) {
         $query = "DELETE FROM " . $this->table . " WHERE id = ?";
         $stmt = $this->db->prepare($query);
-        return $stmt->execute([$id]);
+        $stmt->execute([$id]);
+        return $stmt->rowCount() > 0;
+
     }
 
     /**
@@ -74,12 +78,14 @@ class Member {
 
         $stmt = $this->db->prepare($query);
         
-        return $stmt->execute([
+        $stmt->execute([
             'full_name'         => $data['full_name'],
             'email'             => $data['email'],
             'phone'             => $data['phone'],
             'membership_status' => $data['membership_status'],
             'id'                => $id
         ]);
-    }   
+
+        return $stmt->rowCount() > 0;
+    }
 }
