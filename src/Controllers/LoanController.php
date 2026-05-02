@@ -46,7 +46,7 @@ class LoanController {
             Response::error("This member already has an active loan for this book", 400);
         }
         // 5. Create Loan (The model will handle due_date and copies update)[cite: 1]
-        $loanId = $this->loanModel->borrowBook($data['member_id'], $data['book_id']);
+        $loanId = $this->loanModel->borrowBook($data['book_id'], $data['member_id']);
 
         if ($loanId) {
             Response::success(['id' => $loanId], "Book borrowed successfully", 201);
