@@ -107,6 +107,10 @@ class BookController
             Response::error("Invalid genre", 400);
         }
 
+        if (isset($data['published_year']) && $data['published_year'] !== '' && !is_numeric($data['published_year'])) {
+            Response::error("Published year must be a number", 400);
+        }
+        
         if (!is_numeric($data['total_copies']) || $data['total_copies'] < 1) {
             Response::error("Total copies must be a positive number", 400);
         }

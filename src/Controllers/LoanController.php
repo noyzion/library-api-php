@@ -83,8 +83,8 @@ class LoanController {
 
     /**
      * Get overdue loans
-     * Route: GET /loans/overdue
-     */
+     * Route: GET /overdue/loans
+    */
     public function overdue() {
         $overdueLoans = $this->loanModel->getOverdueLoans();
         Response::success($overdueLoans, "Overdue loans retrieved");

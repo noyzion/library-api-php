@@ -46,7 +46,7 @@ $router->add('DELETE', 'members/{id}', 'MemberController', 'destroy');
 // 8. Loans Routes
 $router->add('GET', 'loans', 'LoanController', 'index');
 $router->add('POST', 'loans', 'LoanController', 'store');
-$router->add('PUT', 'loans/{id}/return', 'LoanController', 'returnBook'); // Specific route for returning books[cite: 1]
+$router->add('PUT', 'loans/{id}/return', 'LoanController', 'returnBook'); 
 $router->add('GET', 'overdue/loans', 'LoanController', 'overdue');
 
 // 9. Dispatch the request based on URL and HTTP Method
