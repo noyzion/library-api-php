@@ -70,6 +70,9 @@ class LoanController {
      */
     public function returnBook($id)
     {
+        if (!is_numeric($id)) {
+            Response::error("Invalid loan ID", 400);
+        }
         $success = $this->loanModel->returnBook($id);
         if ($success) {
             Response::success(null, "Book returned successfully");

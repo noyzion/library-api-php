@@ -126,17 +126,26 @@ class MemberController
      * Remove a member from the system
      * Route: DELETE /members/{id}
      */
-    public function destroy($id)
+     public function destroy($id)
     {
         if (!is_numeric($id)) {
             Response::error("Invalid member ID", 400);
         }
-        $success = $this->memberModel->deleteById($id);
 
-        if ($success) {
-            Response::success(null, "Member deleted successfully");
-        } else {
-            Response::error("Member not found or could not be deleted", 404);
+        try {
+            $success = $this->memberModel->deleteById((int)$id);
+
+            if ($success) {
+                Response::success(null, "Member deleted successfully");
+            }
+
+            Response::error("Member not found", 404);
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                Response::error("Cannot delete member because it has related loans", 409);
+            }
+
+            Response::error("Database error", 500);
         }
     }
 }

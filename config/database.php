@@ -36,7 +36,7 @@ class Database {
                 
             } catch (PDOException $e) {
                 // Terminate script execution and display the error message if connection fails
-                die("Connection failed: " . $e->getMessage());
+                Response::error("Database connection failed", 500);  
             }
         }
         

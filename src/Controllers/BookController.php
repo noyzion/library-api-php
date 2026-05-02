@@ -139,12 +139,21 @@ class BookController
         if (!is_numeric($id)) {
             Response::error("Invalid book ID", 400);
         }
-        $success = $this->bookModel->deleteById($id);
 
-        if ($success) {
-            Response::success(null, "Book deleted successfully");
-        } else {
-            Response::error("Book not found or could not be deleted", 404);
+        try {
+            $success = $this->bookModel->deleteById((int)$id);
+
+            if ($success) {
+                Response::success(null, "Book deleted successfully");
+            }
+
+            Response::error("Book not found", 404);
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                Response::error("Cannot delete book because it has related loans", 409);
+            }
+
+            Response::error("Database error", 500);
         }
     }
 
