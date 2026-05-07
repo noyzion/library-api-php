@@ -1,11 +1,7 @@
 <?php
 
 class Database { 
-    // Database connection parameters
-    private const HOST = "localhost";
-    private const DB_NAME = "library_db";
-    private const USERNAME = "root";
-    private const PASSWORD = "";
+
 
     // Holds the single instance of the PDO connection
     private static $instance = null;
@@ -23,11 +19,18 @@ class Database {
     public static function getConnection() {
         if (self::$instance === null) {
             try {
+                $host = $_ENV['DB_HOST'] ?? 'localhost';
+                $dbName = $_ENV['DB_NAME'] ?? 'library_db';
+                $username = $_ENV['DB_USERNAME'] ?? 'root';
+                $password = $_ENV['DB_PASSWORD'] ?? '';
+
                 // Data Source Name (DSN) defines the connection details
-                $dsn = "mysql:host=" . self::HOST . ";dbname=" . self::DB_NAME . ";charset=utf8";
+                $dsn = "mysql:host={$host};dbname={$dbName};charset=utf8";
+
                 
                 // Initialize the PDO connection
-                self::$instance = new PDO($dsn, self::USERNAME, self::PASSWORD);
+                self::$instance = new PDO($dsn, $username, $password);
+
                 
                 // Set error mode to Exceptions for better error handling
                 self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);                

@@ -1,0 +1,962 @@
+{
+  "info": {
+    "_postman_id": "ad018413-7ed8-4339-a4cd-332a2e89c5a7",
+    "name": "Library API Copy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Books Management",
+      "item": [
+        {
+          "name": "Get All Books",
+          "id": "e134627e-2c2a-4b6e-8659-7f8dfd6efcdd",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Book",
+          "id": "009093ec-7020-45cd-be1e-de90612b4678",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add New Book",
+          "id": "28001303-e7f4-46e9-aae3-93649a79b70b",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Harry Potter\",\r\n  \"author\": \"J.K. Rowling\",\r\n  \"isbn\": \"1234567890123\",\r\n  \"published_year\": 1997,\r\n  \"genre\": \"fiction\",\r\n  \"total_copies\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Book",
+          "id": "45aaf03a-8e74-4541-ae9e-3ae6595b80b8",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Harry Potter and the Philosopher's Stone\",\r\n  \"author\": \"J.K. Rowling\",\r\n  \"isbn\": \"1234567890123\",\r\n  \"published_year\": 1997,\r\n  \"genre\": \"fiction\",\r\n  \"total_copies\": 5,\r\n  \"available_copies\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/books/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Book",
+          "id": "3f07d861-7056-4116-9e70-9263e5605532",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Books By Genre",
+          "id": "5770f331-8a08-4dac-b530-8ae1ac69c644",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books?genre=fiction",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ],
+              "query": [
+                {
+                  "key": "genre",
+                  "value": "fiction"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "a1bb340a-038a-465b-85c5-1cf1c7f1a176"
+    },
+    {
+      "name": "Member Management",
+      "item": [
+        {
+          "name": "Get All Members",
+          "id": "677a1e61-08be-4fa6-814a-f5b552768be7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Member",
+          "id": "cfe38fb3-193b-48f1-bc02-f07b23fbeda4",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Noy Zion\",\r\n  \"email\": \"noy@example.com\",\r\n  \"phone\": \"0501234567\",\r\n  \"membership_status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Member",
+          "id": "4431dc52-aef1-4237-b853-dff4092ad277",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Noy Zion\",\r\n  \"email\": \"noy.updated@example.com\",\r\n  \"phone\": \"0507654321\",\r\n  \"membership_status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Member",
+          "id": "422a25c2-b456-46f8-978c-59c228c44345",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/members/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Member",
+          "id": "30c4c048-5757-4439-a93c-6c0265c7821c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/members/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "93d6416e-71ed-4616-ac41-378f86fbc82f"
+    },
+    {
+      "name": "Loans Management",
+      "item": [
+        {
+          "name": "Create New Loan",
+          "id": "3635c358-7a8b-4d72-8b2c-2da69eaa7e2a",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"book_id\": 1,\r\n    \"member_id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Return Book",
+          "id": "9a0d709e-45a6-4d81-b1b9-8a840c07a971",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"return_date\": \"2026-04-30\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/loans/1/return",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans",
+                "1",
+                "return"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Overdue Loans",
+          "id": "9dcd198f-070b-40a8-a482-fcfe247e1b30",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/overdue/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "overdue",
+                "loans"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Loans",
+          "id": "c01a813b-72ad-4d8a-8401-e34f80dd8cba",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "7d05c366-f036-40cd-8776-280f85df6e78"
+    },
+    {
+      "name": "Error Tests",
+      "item": [
+        {
+          "name": "Create Book - Missing ISBN",
+          "id": "1bc1ce26-3b7c-4eb5-b9a9-961bdc7742eb",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Harry Potter\",\r\n  \"author\": \"J.K. Rowling\",\r\n  \"published_year\": 1997,\r\n  \"genre\": \"fiction\",\r\n  \"total_copies\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Book - Invalid Genre",
+          "id": "554d04e8-4716-40d1-af01-0dd386d25f58",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Romantic Book\",\r\n  \"author\": \"Some Author\",\r\n  \"isbn\": \"1111111111111\",\r\n  \"published_year\": 2020,\r\n  \"genre\": \"romance\",\r\n  \"total_copies\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Member - Invalid Email",
+          "id": "5c11e6b2-522d-4271-88ae-0dfda095bf02",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Invalid Email User\",\r\n  \"email\": \"not-an-email\",\r\n  \"phone\": \"0501234567\",\r\n  \"membership_status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Book - Invalid ID",
+          "id": "da6e5df0-b23c-429f-925b-a2fb4057fa53",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/abc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "abc"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Book - Missing Title",
+          "id": "02fd549d-a86a-4d65-90bf-f3bf318a8ff2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"author\": \"Test Author\",\r\n  \"isbn\": \"9922222222222\",\r\n  \"published_year\": 2020,\r\n  \"genre\": \"fiction\",\r\n  \"total_copies\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Book - Invalid ID",
+          "id": "643004e8-d637-432f-9141-524b30d04ff8",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/abc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books",
+                "abc"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Member - Missing Phone",
+          "id": "8a77593f-c7a8-43b9-9556-6fb93c59de3e",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Missing Phone User\",\r\n  \"email\": \"missingphone@example.com\",\r\n  \"membership_status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Member - Invalid Status",
+          "id": "47d95d95-5858-4173-85f6-700effde6c01",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Invalid Status User\",\r\n  \"email\": \"invalidstatus@example.com\",\r\n  \"phone\": \"0501234567\",\r\n  \"membership_status\": \"blocked\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Loan - Missing Member ID",
+          "id": "5306b5d1-bbab-4144-9b9e-58c36c84bb2b",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"book_id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Loan - Invalid Book ID",
+          "id": "478fcebf-f91c-4afa-b0c4-75b080d751bb",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"book_id\": \"abc\",\r\n  \"member_id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "647096d4-c39b-4d12-9830-2e71a39e5daf"
+    },
+    {
+      "name": "Prepared Business Tests",
+      "item": [
+        {
+          "name": "Setup - Create Book For Duplicate ISBN",
+          "id": "e7b5b910-2626-4716-b6cc-5efdb8d7f8df",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Original ISBN Book\",\r\n  \"author\": \"Test Author\",\r\n  \"isbn\": \"9000000000001\",\r\n  \"published_year\": 2024,\r\n  \"genre\": \"fiction\",\r\n  \"total_copies\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Book - Duplicate ISBN",
+          "id": "002d6edd-09a4-4927-a101-8caa516a7033",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Second ISBN Book\",\r\n  \"author\": \"Another Author\",\r\n  \"isbn\": \"9000000000001\",\r\n  \"published_year\": 2025,\r\n  \"genre\": \"history\",\r\n  \"total_copies\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - Create Member For Duplicate Email",
+          "id": "c1ca1f15-0467-4fd4-bc2e-c9e8164d7a13",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Original Member\",\r\n  \"email\": \"duplicate@example.com\",\r\n  \"phone\": \"0501111111\",\r\n  \"membership_status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Member - Duplicate Email",
+          "id": "cedc1932-85bf-4b01-b96f-497a4c2b1b54",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Second Member\",\r\n  \"email\": \"duplicate@example.com\",\r\n  \"phone\": \"0502222222\",\r\n  \"membership_status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - Create Book For Inactive Member Test",
+          "id": "4d989730-8c2f-4126-9f5e-35c9ceed5f1c",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Book For Inactive Member\",\r\n  \"author\": \"Test Author\",\r\n  \"isbn\": \"9000000000002\",\r\n  \"published_year\": 2024,\r\n  \"genre\": \"science\",\r\n  \"total_copies\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - Create Suspended Member",
+          "id": "9a7c0b95-29e5-4685-bd85-56c8da781ac8",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Suspended Member\",\r\n  \"email\": \"suspended@example.com\",\r\n  \"phone\": \"0503333333\",\r\n  \"membership_status\": \"suspended\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Loan - Inactive Member",
+          "id": "0f7399bf-6467-4ae2-8457-adb3e7479a72",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"book_id\": 7,\r\n  \"member_id\": 6\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - Create One Copy Book",
+          "id": "45483aa0-43cc-42a3-909b-4f3b6e1ba8d4",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"One Copy Book\",\r\n  \"author\": \"Test Author\",\r\n  \"isbn\": \"9000000000003\",\r\n  \"published_year\": 2024,\r\n  \"genre\": \"history\",\r\n  \"total_copies\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - Create Active Member One",
+          "id": "6131051b-ecdc-4cb9-8803-abcf6d6627ee",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Active Member One\",\r\n  \"email\": \"active.one@example.com\",\r\n  \"phone\": \"0504444444\",\r\n  \"membership_status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - Create Active Member Two",
+          "id": "e824ad13-0783-4108-b79a-c589e5f0a0bf",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"full_name\": \"Active Member Two\",\r\n  \"email\": \"active.two@example.com\",\r\n  \"phone\": \"0505555555\",\r\n  \"membership_status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Setup - Borrow One Copy Book First Time",
+          "id": "9017c594-c589-40ae-b42f-09258e850783",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"book_id\": 8,\r\n  \"member_id\": 7\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Loan - No Available Copies",
+          "id": "6692d7fd-ce49-479e-a905-25f14e579674",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"book_id\": 8,\r\n  \"member_id\": 8\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/loans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "loans"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "d3244761-3e66-4fab-a393-301798924cb6"
+    }
+  ]
+}

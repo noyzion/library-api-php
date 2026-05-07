@@ -5,6 +5,29 @@
  * This file handles all incoming requests by loading the core classes,
  * registering the routes, and dispatching the request to the correct controller.
  */
+function loadEnv($path)
+{
+    if (!file_exists($path)) {
+        return;
+    }
+
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+    foreach ($lines as $line) {
+        if (str_starts_with(trim($line), '#')) {
+            continue;
+        }
+
+        [$key, $value] = explode('=', $line, 2);
+
+        $key = trim($key);
+        $value = trim($value);
+
+        $_ENV[$key] = $value;
+    }
+}
+
+loadEnv(__DIR__ . '/.env');
 
 // 2. Load Core classes
 require_once __DIR__ . '/src/Core/Response.php';
