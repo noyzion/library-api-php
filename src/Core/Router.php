@@ -14,11 +14,11 @@ class Router {
 
     public function dispatch($requestedUri, $requestedMethod) {
 
-        $urlPath = parse_url($requestedUri, PHP_URL_PATH);
 
+        $urlPath = parse_url($requestedUri, PHP_URL_PATH); //returns the path without query string
         
-        $scriptPath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
-        if ($scriptPath !== '/') {
+        $scriptPath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])); //dirname - returns the folder of the file, without the file name
+        if ($scriptPath !== '/') { //if not in the root of the server
             $urlPath = str_replace($scriptPath, '', $urlPath);
         }
 

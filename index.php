@@ -6,10 +6,6 @@
  * registering the routes, and dispatching the request to the correct controller.
  */
 
-// 1. Error Reporting - Useful for debugging during development
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // 2. Load Core classes
 require_once __DIR__ . '/src/Core/Response.php';
 require_once __DIR__ . '/src/Core/Request.php';
